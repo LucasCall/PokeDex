@@ -1,13 +1,9 @@
-<poke-search (emmitSearch)="getSearch($event)"></poke-search>
-
-
-
 <section class="listagem">
   <ng-template ngFor let-pokemon [ngForOf]="getAllPokemons" let-i="index">
     <a [routerLink]="['details', pokemon.status.id]" class="pokemon" *ngIf="pokemon.status">
       <section class="pokemon__status">
         <h2>
-          {{ indexBase + i + 1 }} - {{ pokemon.name }}
+          {{ paginationSettings.indexBase + i + 1 }} - {{ pokemon.name }}
         </h2>
 
         <ul>
@@ -18,10 +14,7 @@
       </section>
 
       <section class="pokemon__image">
-        <img
-          [src]="pokemon.status.sprites.other.dream_world.front_default"
-          [alt]="pokemon.name"
-        >
+        <img [src]="pokemon.status.sprites.other.dream_world.front_default" [alt]="pokemon.name">
       </section>
     </a>
   </ng-template>
@@ -29,26 +22,32 @@
 
 <div class="container-pagination">
   <div class="pagination">
-    <button (click)="goToFirstPage()" [disabled]="currentPage === 1"><<</button>
-    <button (click)="changePage(currentPage - 1)" [disabled]="currentPage === 1"><</button>
-    <ng-container *ngFor="let page of displayedPages">
-      <button [class.active]="page === currentPage" (click)="changePage(page)">{{ page }}</button>
-    </ng-container>
-    <button (click)="changePage(currentPage + 1)" [disabled]="currentPage === totalPages">></button>
-    <button (click)="goToLastPage()" [disabled]="currentPage === totalPages">>></button>
+    <button (click)="goToFirstPage()" [disabled]="paginationSettings.currentPage === 1">
+      << 
+    </button>
+        <button (click)="changePage(paginationSettings.currentPage - 1)"
+          [disabled]="paginationSettings.currentPage === 1">
+          < 
+        </button>
+            <ng-container *ngFor="let page of paginationSettings.displayedPages">
+              <button [class.active]="page === paginationSettings.currentPage" (click)="changePage(page)">{{ page
+                }}</button>
+            </ng-container>
+            <button (click)="changePage(paginationSettings.currentPage + 1)"
+              [disabled]="paginationSettings.currentPage === paginationSettings.totalPages">>
+            </button>
+            <button (click)="goToLastPage()"
+              [disabled]="paginationSettings.currentPage === paginationSettings.totalPages">>>
+            </button>
   </div>
-  
+
   <div class="items-per-page">
     Itens por página:
-    <select class="select-items-per-page" [(ngModel)]="selectedItemsPerPage" (change)="onItemsPerPageChange()">
-      <option *ngFor="let option of itemsPerPageOptions" [value]="option">{{ option }}</option>
+    <select class="select-items-per-page" [(ngModel)]="paginationSettings.selectedItemsPerPage"
+      (change)="onItemsPerPageChange()">
+      <option *ngFor="let option of paginationSettings.itemsPerPageOptions" [value]="option">{{ option }}</option>
     </select>
   </div>
 </div>
 
-<img 
-  src="../../../assets/icons/error.png" 
-  alt="Deu erro na mostragem de pokemon" 
-  width="100%"
-  *ngIf="apiError"
->
+<img src="../../../assets/icons/error.png" alt="Deu erro na mostragem de pokemon" width="100%" *ngIf="apiError">

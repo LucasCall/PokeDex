@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PokeApiService } from 'src/app/service/poke-api.service';
+import { PaginationSettings } from '../pagination-settings';
 
 @Component({
   selector: 'poke-list',
@@ -8,20 +9,11 @@ import { PokeApiService } from 'src/app/service/poke-api.service';
 })
 export class PokeListComponent implements OnInit {
 
-  public currentPage = 1;
-  public pageSize = 10;
-  public totalItems = 0;
-  public pagesToDisplay = 6;
-  public displayedPages: number[] = [];
   private setAllPokemons: any;
   public getAllPokemons: any;
   public apiError = false;
-  public totalPages: number = 0;
-  public itemsPerPageOptions = [10, 20, 50];
-  public selectedItemsPerPage = this.itemsPerPageOptions[0];
-  public indexBase: number = 0;
-
-      
+  
+  paginationSettings: PaginationSettings = new PaginationSettings();
 
   constructor(private pokeApiService: PokeApiService) { }
 
@@ -29,24 +21,15 @@ export class PokeListComponent implements OnInit {
     this.fetchPokemons();
   }
 
-  public getSearch(value: string) {
-    const filter = this.setAllPokemons.filter((res: any) => {
-      return !res.name.indexOf(value.toLowerCase());
-    });
-
-    this.getAllPokemons = filter;
-    this.totalItems = filter.length;
-  }
-
   private fetchPokemons(): void {
-    const offset = (this.currentPage - 1) * this.pageSize;
-    this.indexBase = offset;
-    this.pokeApiService.apiListAllPokemons(offset, this.pageSize).subscribe(
+    const offset = (this.paginationSettings.currentPage - 1) * this.paginationSettings.pageSize;
+    this.paginationSettings.indexBase = offset;
+    this.pokeApiService.apiListAllPokemons(offset, this.paginationSettings.pageSize).subscribe(
       res => {
         this.setAllPokemons = res.results;
         this.getAllPokemons = this.setAllPokemons;
-        this.totalItems = res.count;
-        this.totalPages = Math.ceil(this.totalItems / this.pageSize);
+        this.paginationSettings.totalItems = res.count;
+        this.paginationSettings.totalPages = Math.ceil(this.paginationSettings.totalItems / this.paginationSettings.pageSize);
         this.updateDisplayedPages();
       },
       error => {
@@ -56,38 +39,38 @@ export class PokeListComponent implements OnInit {
   }
 
   public changePage(page: number): void {
-    if (page >= 1 && page <= this.totalPages) {
-      this.currentPage = page;
+    if (page >= 1 && page <= this.paginationSettings.totalPages) {
+      this.paginationSettings.currentPage = page;
       this.fetchPokemons();
     }
   }
 
   public onItemsPerPageChange(): void {
-    this.currentPage = 1;
-    this.pageSize = this.selectedItemsPerPage;
+    this.paginationSettings.currentPage = 1;
+    this.paginationSettings.pageSize = this.paginationSettings.selectedItemsPerPage;
     this.fetchPokemons();
   }
 
   private updateDisplayedPages(): void {
-    const middlePage = Math.ceil(this.pagesToDisplay / 2);
-    const startPage = Math.max(1, this.currentPage - middlePage + 1);
-    const endPage = Math.min(this.totalPages, startPage + this.pagesToDisplay - 1);
-    this.displayedPages = [];
+    const middlePage = Math.ceil(this.paginationSettings.pagesToDisplay / 2);
+    const startPage = Math.max(1, this.paginationSettings.currentPage - middlePage + 1);
+    const endPage = Math.min(this.paginationSettings.totalPages, startPage + this.paginationSettings.pagesToDisplay - 1);
+    this.paginationSettings.displayedPages = [];
 
     for (let i = startPage; i <= endPage; i++) {
-      this.displayedPages.push(i);
+      this.paginationSettings.displayedPages.push(i);
     }
   }
 
   public goToFirstPage(): void {
-    if (this.currentPage !== 1) {
+    if (this.paginationSettings.currentPage !== 1) {
       this.changePage(1);
     }
   }
 
   public goToLastPage(): void {
-    if (this.currentPage !== this.totalPages) {
-      this.changePage(this.totalPages);
+    if (this.paginationSettings.currentPage !== this.paginationSettings.totalPages) {
+      this.changePage(this.paginationSettings.totalPages);
     }
   }
 }

@@ -3,13 +3,14 @@
 @import '../../../config-scss/resete.scss';
 
 $padding: rem-calc(20);
-:host{
-    
+
+:host {
+
     .listagem {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
-    
+
         padding: $padding 0;
     }
 
@@ -29,7 +30,7 @@ $padding: rem-calc(20);
         text-decoration: none;
         color: var(--primary-color);
 
-        &__status{
+        &__status {
             h2 {
                 font-size: rem-calc(22);
                 font-style: italic;
@@ -44,22 +45,22 @@ $padding: rem-calc(20);
                 flex-direction: column;
 
                 li {
-						background: var(--cinza);
-						font-size: rem-calc(10);
+                    background: var(--cinza);
+                    font-size: rem-calc(10);
 
-						display: flex;
-						justify-content: center;
-						align-items: center;
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
 
-						border-radius: rem-calc(50);
+                    border-radius: rem-calc(50);
 
-						width: rem-calc(60);
-						margin-bottom: rem-calc(5);
+                    width: rem-calc(60);
+                    margin-bottom: rem-calc(5);
                 }
             }
         }
 
-        &__image{
+        &__image {
             position: absolute;
 
             display: flex;
@@ -68,13 +69,13 @@ $padding: rem-calc(20);
 
             height: rem-calc(90);
             width: rem-calc(110);
-            
+
             right: $padding;
             bottom: $padding;
-            
+
             background: url('../../../assets/bg/background-list-pokemon.svg') no-repeat;
 
-            img{
+            img {
                 width: rem-calc(80);
             }
         }
@@ -85,4 +86,47 @@ $padding: rem-calc(20);
             width: 100% !important;
         }
     }
+
+    .container-pagination {
+        display: flex;
+        justify-content: space-between;
+        background-color: rgba(255, 255, 255, 0.2);
+        border-radius: rem-calc(10);
+    }
+
+    .items-per-page {
+        width: rem-calc(150);
+        display: flex;
+        color: #fff;
+        margin: rem-calc(5);
+        padding: rem-calc(10);
+        .select-items-per-page {
+            padding: rem-calc(5);
+            border-radius: rem-calc(10);
+          }
+    }
+
+    .pagination {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 90%;
+        padding: rem-calc(10);
+
+        button {
+            flex-grow: 1;
+            margin: rem-calc(1);
+            padding: rem-calc(10);
+            border-radius: rem-calc(20);
+        }
+        span {
+            padding: rem-calc(10);
+        }
+    }
+
+    .active {
+        background-color: var(--secondary-color);
+        color: var(--branco);
+      }
+    
 }

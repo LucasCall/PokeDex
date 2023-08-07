@@ -1,3 +1,10 @@
+<div *ngIf="paginationSettings.selectedItemsPerPage == 50">
+  <app-pagination [paginationSettings]="paginationSettings"
+                  (changePageEvent)="changePage($event)"
+                  (itemsPerPageChangeEvent)="onItemsPerPageChange($event)">
+  </app-pagination>
+</div>
+
 <section class="listagem">
   <ng-template ngFor let-pokemon [ngForOf]="getAllPokemons" let-i="index">
     <a [routerLink]="['details', pokemon.status.id]" class="pokemon" *ngIf="(paginationSettings.indexBase + i + 1) <= 649 && pokemon.status">

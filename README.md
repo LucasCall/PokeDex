@@ -1,27 +1,7 @@
 # Pokedex
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 14.0.0.
+## Desenvolvimento da Pokedex utilizando o framework Angular
 
-## Development server
+Este projeto está relacionado ao Curso de Angular 2 (versão 15+) com Typescript, oferecido desde os conceitos fundamentais até tópicos mais avançados na plataforma Udemy. Dentro desse contexto educacional, meu engajamento se direciona à tarefa de utilizar a abrangente `pokeapi`. Entretanto, é importante destacar minha escolha de ir além dos limites da atividade proposta. No escopo deste projeto, além de abordar a funcionalidade central, ampliei minha atuação para criar um sistema de paginação refinado, aproveitando a própria capacidade de paginação já disponibilizada pela API.
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+Além disso, introduzi uma camada de design diferenciada para os diversos tipos de pokémon, associando a cada categoria uma coloração representativa única. Vale ressaltar que esta Pokedex abrange os pokémons até a quinta geração, englobando, assim, uma ampla variedade de espécies fascinantes.

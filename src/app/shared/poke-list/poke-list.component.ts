@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { PokeApiService } from 'src/app/service/poke-api.service';
-import { PaginationSettings } from '../pagination-settings';
+import { PaginationSettings } from '../model/pagination-settings';
+import { ColorList } from '../model/color-list';
 
 @Component({
   selector: 'poke-list',
@@ -12,7 +13,9 @@ export class PokeListComponent implements OnInit {
   private setAllPokemons: any;
   public getAllPokemons: any;
   public apiError = false;
-  
+
+  private readonly MAX_TOTAL_ITEMS = 649;
+
   paginationSettings: PaginationSettings = new PaginationSettings();
 
   constructor(private pokeApiService: PokeApiService) { }
@@ -24,17 +27,16 @@ export class PokeListComponent implements OnInit {
   private fetchPokemons(): void {
     const offset = (this.paginationSettings.currentPage - 1) * this.paginationSettings.pageSize;
     this.paginationSettings.indexBase = offset;
+
     this.pokeApiService.apiListAllPokemons(offset, this.paginationSettings.pageSize).subscribe(
       res => {
         this.setAllPokemons = res.results;
         this.getAllPokemons = this.setAllPokemons;
-        this.paginationSettings.totalItems = res.count;
+
+        this.paginationSettings.totalItems = Math.min(res.count, this.MAX_TOTAL_ITEMS);
         this.paginationSettings.totalPages = Math.ceil(this.paginationSettings.totalItems / this.paginationSettings.pageSize);
         this.updateDisplayedPages();
       },
-      error => {
-        this.apiError = true;
-      }
     );
   }
 
@@ -43,12 +45,6 @@ export class PokeListComponent implements OnInit {
       this.paginationSettings.currentPage = page;
       this.fetchPokemons();
     }
-  }
-
-  public onItemsPerPageChange(): void {
-    this.paginationSettings.currentPage = 1;
-    this.paginationSettings.pageSize = this.paginationSettings.selectedItemsPerPage;
-    this.fetchPokemons();
   }
 
   private updateDisplayedPages(): void {
@@ -62,15 +58,21 @@ export class PokeListComponent implements OnInit {
     }
   }
 
-  public goToFirstPage(): void {
-    if (this.paginationSettings.currentPage !== 1) {
-      this.changePage(1);
-    }
-  }
+  public onItemsPerPageChange(newPageSize: number): void {
+    this.paginationSettings.currentPage = 1;
+    this.paginationSettings.pageSize = newPageSize;
+    this.fetchPokemons();
+  }  
 
-  public goToLastPage(): void {
-    if (this.paginationSettings.currentPage !== this.paginationSettings.totalPages) {
-      this.changePage(this.paginationSettings.totalPages);
+  getPokemonTypeStyle(type: string): any {
+    const typeColor = ColorList.typeColors[type];
+  
+    if (typeColor) {
+      return typeColor;
+    } else {
+      return { backgroundColor: '#000', color: '#fff' };
     }
   }
+  
+  
 }

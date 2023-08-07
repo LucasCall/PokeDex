@@ -1,0 +1,25 @@
+<div class="container-pagination">
+    <div class="pagination">
+        <button (click)="goToFirstPage()" [disabled]="paginationSettings.currentPage === 1"> << </button>
+                <button (click)="paginationSettings && changePage(paginationSettings.currentPage - 1)"> < </button>
+                        <ng-container *ngFor="let page of paginationSettings.displayedPages">
+                            <button [class.active]="page === paginationSettings.currentPage"
+                                (click)="changePage(page)">{{ page }}</button>
+                        </ng-container>
+                        <button (click)="changePage(paginationSettings.currentPage + 1)"
+                            [disabled]="paginationSettings.currentPage === paginationSettings.totalPages">>
+                        </button>
+                        <button (click)="goToLastPage()"
+                            [disabled]="paginationSettings.currentPage === paginationSettings.totalPages">>>
+                        </button>
+    </div>
+
+    <div class="items-per-page">
+        Itens por página:
+        <select class="select-items-per-page" [(ngModel)]="paginationSettings.selectedItemsPerPage"
+            (change)="onItemsPerPageChange(paginationSettings.selectedItemsPerPage)">
+            <option *ngFor="let option of paginationSettings.itemsPerPageOptions" [value]="option">{{ option }}
+            </option>
+        </select>
+    </div>
+</div>

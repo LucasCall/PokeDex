@@ -5,17 +5,20 @@ import { PokeHeaderComponent } from './poke-header/poke-header.component';
 import { PokeListComponent } from './poke-list/poke-list.component';
 import { RouterModule } from '@angular/router';
 import { FormsModule } from '@angular/forms';
+import { PaginationComponent } from './pagination/pagination.component';
 
 
 
 @NgModule({
   declarations: [
     PokeHeaderComponent,
-    PokeListComponent
+    PokeListComponent,
+    PaginationComponent
   ],
   exports: [
     PokeHeaderComponent,
-    PokeListComponent
+    PokeListComponent,
+    PaginationComponent
   ],
   imports: [
     CommonModule,

@@ -8,4 +8,10 @@ Além disso, introduzi uma camada de design diferenciada para os diversos tipos 
 
 ### Aqui está uma demonstração da Pokedex em ação:
 
-<img src="src/assets/gif/pokedex.gif" alt="Demonstração da Pokédex" width="750" height="600">
+<img src="src/assets/gif/pokedex.gif" alt="Demonstração da Pokédex" style="max-width: 100%; height: auto;">
+
+
+
+
+
+
